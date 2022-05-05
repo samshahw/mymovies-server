@@ -22,6 +22,7 @@ public class MoviesRestController {
     @GetMapping("/movies")
     public List<MovieView> findAll(@RequestParam @Nullable String title,
                                    @RequestParam @Nullable Boolean exactTitle) {
+        // TODO: Implement search with filters for genre, director, country and release date
         if (title != null && title.length() >= 2) {
             if (exactTitle != null && exactTitle) {
                 return this.moviesDAO.findAllByTitle(title);
