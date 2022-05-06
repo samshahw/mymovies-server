@@ -21,12 +21,15 @@ public class DirectorsRestController {
 
     @GetMapping("/directors")
     public List<DirectorView> findAll(@RequestParam @Nullable String name,
-                                      @RequestParam @Nullable Boolean exactName) {
+                                      @RequestParam @Nullable Boolean exactName,
+                                      @RequestParam @Nullable String country) {
         if (name != null && name.length() >= 2) {
             if (exactName != null && exactName) {
-                return this.directorsDAO.findAllByName(name);
+                return this.directorsDAO.findAllByName(name, country);
             }
-            return this.directorsDAO.findAllStartWithName(name);
+            return this.directorsDAO.findAllStartWithName(name, country);
+        } else if (country != null && !country.isEmpty()) {
+            return this.directorsDAO.findAllByCountry(country);
         }
         return this.directorsDAO.findAll();
     }

@@ -67,14 +67,14 @@ public class MoviesDAOimpl implements MoviesDAO {
         if (movie.getId() == null) {
             final String query = "INSERT INTO mymovies.movie (title, genre_key, director_key, "
                                  + "country_key, release_date) VALUES (?, ?, ?, ?, ?)";
-            this.jdbcTemplate.update(query, movie.getTitle(), movie.getGenre_key(),
-                                     movie.getDirector_key(), movie.getCountry_key(),
+            this.jdbcTemplate.update(query, movie.getTitle(), movie.getGenreKey(),
+                                     movie.getDirectorKey(), movie.getCountryKey(),
                                      movie.getReleaseDate());
         } else {
             final String query = "UPDATE mymovies.movie SET title=?, genre_key=?, director_key=?, "
                                  + "country_key=?, release_date=? WHERE id=?";
-            this.jdbcTemplate.update(query, movie.getTitle(), movie.getGenre_key(),
-                                     movie.getDirector_key(), movie.getCountry_key(),
+            this.jdbcTemplate.update(query, movie.getTitle(), movie.getGenreKey(),
+                                     movie.getDirectorKey(), movie.getCountryKey(),
                                      movie.getReleaseDate(), movie.getId());
         }
     }

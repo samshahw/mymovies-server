@@ -8,9 +8,11 @@ public interface DirectorsDAO {
 
     List<DirectorView> findAll();
 
-    List<DirectorView> findAllStartWithName(String name);
+    List<DirectorView> findAllStartWithName(String name, String country);
 
-    List<DirectorView> findAllByName(String name);
+    List<DirectorView> findAllByName(String name, String country);
+
+    List<DirectorView> findAllByCountry(String country);
 
     DirectorView findById(Long id);
 }

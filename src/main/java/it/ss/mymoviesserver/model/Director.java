@@ -4,7 +4,7 @@ public class Director {
 
     private Long id;
     private String name;
-    private Integer country_key;
+    private Integer countryKey;
 
     public Long getId() {
         return id;
@@ -22,11 +22,11 @@ public class Director {
         this.name = name;
     }
 
-    public Integer getCountry_key() {
-        return country_key;
+    public Integer getCountryKey() {
+        return countryKey;
     }
 
-    public void setCountry_key(Integer country_key) {
-        this.country_key = country_key;
+    public void setCountryKey(Integer countryKey) {
+        this.countryKey = countryKey;
     }
 }

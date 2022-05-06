@@ -24,22 +24,42 @@ public class DirectorsDAOimpl implements DirectorsDAO {
     }
 
     @Override
-    public List<DirectorView> findAllStartWithName(String name) {
-        final String query = "SELECT * FROM mymovies.directors_list "
-                             + "WHERE LOWER(name) LIKE LOWER(?) ORDER BY id DESC";
-        return this.jdbcTemplate.query(query, new DirectorRowMapper(), String.format("%s%%", name));
+    public List<DirectorView> findAllStartWithName(String name, String country) {
+        if (country != null) {
+            final String query = "SELECT * FROM mymovies.directors_list WHERE LOWER(name) "
+                                 + "LIKE LOWER(?) AND country = ? ORDER BY id DESC";
+            return this.jdbcTemplate.query(query, new DirectorRowMapper(),
+                                           String.format("%s%%", name), country);
+        } else {
+            final String query = "SELECT * FROM mymovies.directors_list WHERE LOWER(name) "
+                                 + "LIKE LOWER(?) ORDER BY id DESC";
+            return this.jdbcTemplate.query(query, new DirectorRowMapper(),
+                                           String.format("%s%%", name));
+        }
+    }
+
+    @Override
+    public List<DirectorView> findAllByName(String name, String country) {
+        if (country != null) {
+            final String query = "SELECT * FROM mymovies.directors_list WHERE LOWER(name) "
+                                 + "LIKE LOWER(?) AND country = ? ORDER BY id DESC";
+            return this.jdbcTemplate.query(query, new DirectorRowMapper(), name, country);
+        } else {
+            final String query = "SELECT * FROM mymovies.directors_list WHERE LOWER(name) "
+                                 + "LIKE LOWER(?) ORDER BY id DESC";
+            return this.jdbcTemplate.query(query, new DirectorRowMapper(), name);
+        }
+    }
+
+    @Override
+    public List<DirectorView> findAllByCountry(String country) {
+        final String query = "SELECT * FROM mymovies.directors_list WHERE country = ?";
+        return this.jdbcTemplate.query(query, new DirectorRowMapper(), country);
     }
 
     @Override
     public DirectorView findById(Long id) {
         final String query = "SELECT * FROM mymovies.directors_list WHERE id = ? ORDER BY id DESC";
         return this.jdbcTemplate.queryForObject(query, new DirectorRowMapper(), id);
-    }
-
-    @Override
-    public List<DirectorView> findAllByName(String name) {
-        final String query = "SELECT * FROM mymovies.directors_list "
-                             + "WHERE LOWER(name) LIKE LOWER(?) ORDER BY id DESC";
-        return this.jdbcTemplate.query(query, new DirectorRowMapper(), name);
     }
 }

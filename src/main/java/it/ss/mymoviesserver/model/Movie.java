@@ -9,9 +9,9 @@ public class Movie {
 
     private Long id;
     private String title;
-    private Integer genre_key;
-    private Integer director_key;
-    private Integer country_key;
+    private Integer genreKey;
+    private Integer directorKey;
+    private Integer countryKey;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
@@ -32,28 +32,28 @@ public class Movie {
         this.title = title;
     }
 
-    public Integer getGenre_key() {
-        return genre_key;
+    public Integer getGenreKey() {
+        return genreKey;
     }
 
-    public void setGenre_key(Integer genre_key) {
-        this.genre_key = genre_key;
+    public void setGenreKey(Integer genreKey) {
+        this.genreKey = genreKey;
     }
 
-    public Integer getDirector_key() {
-        return director_key;
+    public Integer getDirectorKey() {
+        return directorKey;
     }
 
-    public void setDirector_key(Integer director_key) {
-        this.director_key = director_key;
+    public void setDirectorKey(Integer directorKey) {
+        this.directorKey = directorKey;
     }
 
-    public Integer getCountry_key() {
-        return country_key;
+    public Integer getCountryKey() {
+        return countryKey;
     }
 
-    public void setCountry_key(Integer country_key) {
-        this.country_key = country_key;
+    public void setCountryKey(Integer countryKey) {
+        this.countryKey = countryKey;
     }
 
     public Date getReleaseDate() {
