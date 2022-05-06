@@ -1,29 +1,24 @@
 package it.ss.mymoviesserver.dao;
 
 import it.ss.mymoviesserver.model.Movie;
-import it.ss.mymoviesserver.model.MovieView;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface MoviesDAO {
+public interface MoviesDAO extends CrudRepository<Movie, Long> {
 
-    List<MovieView> findAll();
+    List<Movie> findByOrderByIdDesc();
 
-    List<MovieView> findAllStartWithTitle(String title);
+    List<Movie> findByTitleStartsWith(String title);
 
-    List<MovieView> findAllByTitle(String title);
+    List<Movie> findByTitle(String title);
 
-    List<MovieView> findAllByGenre(String genre);
+    List<Movie> findByGenre(String genre);
 
-    List<MovieView> findAllByDirector(String director);
+    List<Movie> findByDirector(String director);
 
-    List<MovieView> findAllByCountry(String country);
+    List<Movie> findByCountry(String country);
 
-    MovieView findById(Long id);
-
-    void saveOrUpdate(Movie movie);
-
-    void delete(Movie movie);
-
-    void deleteById(Long id);
+    Optional<Movie> findById(Long id);
 }

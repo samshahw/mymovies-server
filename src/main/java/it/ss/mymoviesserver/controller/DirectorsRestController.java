@@ -1,7 +1,10 @@
 package it.ss.mymoviesserver.controller;
 
+import it.ss.mymoviesserver.dao.CountriesDAO;
 import it.ss.mymoviesserver.dao.DirectorsDAO;
-import it.ss.mymoviesserver.model.DirectorView;
+import it.ss.mymoviesserver.model.Country;
+import it.ss.mymoviesserver.model.Director;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,28 +17,43 @@ import java.util.List;
 public class DirectorsRestController {
 
     private final DirectorsDAO directorsDAO;
+    private final CountriesDAO countriesDAO;
 
-    public DirectorsRestController(DirectorsDAO directorsDAO) {
+    @Autowired
+    public DirectorsRestController(DirectorsDAO directorsDAO, CountriesDAO countriesDAO) {
         this.directorsDAO = directorsDAO;
+        this.countriesDAO = countriesDAO;
     }
 
     @GetMapping("/directors")
-    public List<DirectorView> findAll(@RequestParam @Nullable String name,
-                                      @RequestParam @Nullable Boolean exactName,
-                                      @RequestParam @Nullable String country) {
-        if (name != null && name.length() >= 2) {
+    public List<Director> findAll(@RequestParam @Nullable String name,
+                                  @RequestParam @Nullable Boolean exactName,
+                                  @RequestParam @Nullable String countryName) {
+        final Country country = this.countriesDAO.findCountryByName(countryName).orElse(null);
+        if (name != null && name.length() > 1) {
             if (exactName != null && exactName) {
-                return this.directorsDAO.findAllByName(name, country);
+                if (country != null) {
+                    return this.directorsDAO.findByNameAndCountryIs(name, country);
+                } else {
+                    return this.directorsDAO.findByName(name);
+                }
+            } else {
+                if (country != null) {
+                    return this.directorsDAO.findByNameStartsWithIgnoreCaseAndCountry(name,
+                                                                                      country);
+                } else {
+                    return this.directorsDAO.findByNameStartsWithIgnoreCaseOrderByIdDesc(name);
+                }
             }
-            return this.directorsDAO.findAllStartWithName(name, country);
-        } else if (country != null && !country.isEmpty()) {
-            return this.directorsDAO.findAllByCountry(country);
+        } else if (country != null) {
+            return this.directorsDAO.findByCountry(country);
+        } else {
+            return this.directorsDAO.findByOrderByIdDesc();
         }
-        return this.directorsDAO.findAll();
     }
 
     @GetMapping("/directors/{id}")
-    public DirectorView findById(@PathVariable Long id) {
-        return this.directorsDAO.findById(id);
+    public Director findById(@PathVariable Long id) {
+        return this.directorsDAO.findById(id).orElse(null);
     }
 }

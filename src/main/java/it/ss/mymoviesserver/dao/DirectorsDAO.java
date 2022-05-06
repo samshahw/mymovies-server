@@ -1,18 +1,25 @@
 package it.ss.mymoviesserver.dao;
 
-import it.ss.mymoviesserver.model.DirectorView;
+import it.ss.mymoviesserver.model.Country;
+import it.ss.mymoviesserver.model.Director;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface DirectorsDAO {
+public interface DirectorsDAO extends CrudRepository<Director, Long> {
 
-    List<DirectorView> findAll();
+    List<Director> findByOrderByIdDesc();
 
-    List<DirectorView> findAllStartWithName(String name, String country);
+    List<Director> findByNameStartsWithIgnoreCaseOrderByIdDesc(String name);
 
-    List<DirectorView> findAllByName(String name, String country);
+    List<Director> findByNameStartsWithIgnoreCaseAndCountry(String name, Country country);
 
-    List<DirectorView> findAllByCountry(String country);
+    List<Director> findByName(String name);
 
-    DirectorView findById(Long id);
+    List<Director> findByNameAndCountryIs(String name, Country country);
+
+    List<Director> findByCountry(Country country);
+
+    Optional<Director> findById(Long id);
 }

@@ -1,10 +1,16 @@
 package it.ss.mymoviesserver.model;
 
-public class DirectorView {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "genre", schema = "mymovies")
+public class Genre {
+
+    @Id
     private Long id;
     private String name;
-    private String country;
 
     public Long getId() {
         return id;
@@ -20,13 +26,5 @@ public class DirectorView {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 }

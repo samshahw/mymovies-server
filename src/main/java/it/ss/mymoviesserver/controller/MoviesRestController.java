@@ -1,7 +1,7 @@
 package it.ss.mymoviesserver.controller;
 
 import it.ss.mymoviesserver.dao.MoviesDAO;
-import it.ss.mymoviesserver.model.MovieView;
+import it.ss.mymoviesserver.model.Movie;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,20 +20,20 @@ public class MoviesRestController {
     }
 
     @GetMapping("/movies")
-    public List<MovieView> findAll(@RequestParam @Nullable String title,
-                                   @RequestParam @Nullable Boolean exactTitle) {
+    public List<Movie> findAll(@RequestParam @Nullable String title,
+                               @RequestParam @Nullable Boolean exactTitle) {
         // TODO: Implement search with filters for genre, director, country and release date
         if (title != null && title.length() >= 2) {
             if (exactTitle != null && exactTitle) {
-                return this.moviesDAO.findAllByTitle(title);
+                return this.moviesDAO.findByTitle(title);
             }
-            return this.moviesDAO.findAllStartWithTitle(title);
+            return this.moviesDAO.findByTitleStartsWith(title);
         }
-        return this.moviesDAO.findAll();
+        return this.moviesDAO.findByOrderByIdDesc();
     }
 
     @GetMapping("/movies/{id}")
-    public MovieView find(@PathVariable Long id) {
-        return this.moviesDAO.findById(id);
+    public Movie find(@PathVariable Long id) {
+        return this.moviesDAO.findById(id).orElse(null);
     }
 }

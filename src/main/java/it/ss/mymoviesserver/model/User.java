@@ -4,14 +4,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+@Entity
+@Table(name = "user", schema = "mymovies")
 public class User implements UserDetails {
 
+    @Id
     private Long id;
     private String username;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public Long getId() {

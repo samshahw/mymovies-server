@@ -1,17 +1,17 @@
 package it.ss.mymoviesserver.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "director", schema = "mymovies")
-public class Director {
+@Table(name = "country", schema = "mymovies")
+public class Country {
 
     @Id
     private Long id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "country_key")
-    private Country country;
+    private String iso;
 
     public Long getId() {
         return id;
@@ -29,11 +29,11 @@ public class Director {
         this.name = name;
     }
 
-    public Country getCountry() {
-        return country;
+    public String getIso() {
+        return iso;
     }
 
-    public void setCountry(Country country) {
-        this.country = country;
+    public void setIso(String iso) {
+        this.iso = iso;
     }
 }
