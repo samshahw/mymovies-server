@@ -103,19 +103,19 @@ public class MoviesRestController {
         return this.moviesDAO.findByOrderByIdDesc();
     }
 
-    @GetMapping("/movies/genre/{id}")
+    @GetMapping("/movies/genres/{id}")
     public List<Movie> findByGenre(@PathVariable Long id) {
         final Genre genre = this.genresDAO.findGenreById(id).orElse(null);
         return this.moviesDAO.findByGenreOrderByIdDesc(genre);
     }
 
-    @GetMapping("/movies/director/{id}")
+    @GetMapping("/movies/directors/{id}")
     public List<Movie> findByDirector(@PathVariable Long id) {
         final Director director = this.directorsDAO.findDirectorById(id).orElse(null);
         return this.moviesDAO.findByDirectorOrderByIdDesc(director);
     }
 
-    @GetMapping("/movies/country/{id}")
+    @GetMapping("/movies/countries/{id}")
     public List<Movie> findByCountry(@PathVariable Long id) {
         final Country country = this.countriesDAO.findCountryById(id).orElse(null);
         return this.moviesDAO.findByCountryOrderByIdDesc(country);
