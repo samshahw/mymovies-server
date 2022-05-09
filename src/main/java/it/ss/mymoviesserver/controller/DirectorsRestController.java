@@ -26,27 +26,28 @@ public class DirectorsRestController {
     }
 
     @GetMapping("/directors")
-    public List<Director> findAll(@RequestParam @Nullable String name,
-                                  @RequestParam @Nullable Boolean exactName,
-                                  @RequestParam @Nullable String countryName) {
+    public List<Director> findByAttr(@RequestParam @Nullable String name,
+                                     @RequestParam @Nullable Boolean exactName,
+                                     @RequestParam @Nullable String countryName) {
         final Country country = this.countriesDAO.findCountryByName(countryName).orElse(null);
         if (name != null && name.length() > 1) {
             if (exactName != null && exactName) {
                 if (country != null) {
-                    return this.directorsDAO.findByNameAndCountryIs(name, country);
+                    return this.directorsDAO.findByNameAndCountryOrderByIdDesc(name, country);
                 } else {
-                    return this.directorsDAO.findByName(name);
+                    return this.directorsDAO.findByNameOrderByIdDesc(name);
                 }
             } else {
                 if (country != null) {
-                    return this.directorsDAO.findByNameStartsWithIgnoreCaseAndCountry(name,
-                                                                                      country);
+                    return this.directorsDAO.findByNameStartsWithIgnoreCaseAndCountryOrderByIdDesc(
+                            name,
+                            country);
                 } else {
                     return this.directorsDAO.findByNameStartsWithIgnoreCaseOrderByIdDesc(name);
                 }
             }
         } else if (country != null) {
-            return this.directorsDAO.findByCountry(country);
+            return this.directorsDAO.findByCountryOrderByIdDesc(country);
         } else {
             return this.directorsDAO.findByOrderByIdDesc();
         }
@@ -54,6 +55,6 @@ public class DirectorsRestController {
 
     @GetMapping("/directors/{id}")
     public Director findById(@PathVariable Long id) {
-        return this.directorsDAO.findById(id).orElse(null);
+        return this.directorsDAO.findDirectorById(id).orElse(null);
     }
 }

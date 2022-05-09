@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface CountriesDAO extends CrudRepository<Country, Long> {
 
+    Optional<Country> findCountryById(Long id);
+
     Optional<Country> findCountryByName(String name);
 }

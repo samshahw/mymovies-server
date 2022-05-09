@@ -9,17 +9,23 @@ import java.util.Optional;
 
 public interface DirectorsDAO extends CrudRepository<Director, Long> {
 
+    Optional<Director> findDirectorById(Long id);
+
     List<Director> findByOrderByIdDesc();
+
+    // Wildcard queries
 
     List<Director> findByNameStartsWithIgnoreCaseOrderByIdDesc(String name);
 
-    List<Director> findByNameStartsWithIgnoreCaseAndCountry(String name, Country country);
+    List<Director> findByNameStartsWithIgnoreCaseAndCountryOrderByIdDesc(String name, Country country);
 
-    List<Director> findByName(String name);
+    // Exact queries
 
-    List<Director> findByNameAndCountryIs(String name, Country country);
+    List<Director> findByNameOrderByIdDesc(String name);
 
-    List<Director> findByCountry(Country country);
+    List<Director> findByNameAndCountryOrderByIdDesc(String name, Country country);
 
-    Optional<Director> findById(Long id);
+    // Additional queries
+
+    List<Director> findByCountryOrderByIdDesc(Country country);
 }
