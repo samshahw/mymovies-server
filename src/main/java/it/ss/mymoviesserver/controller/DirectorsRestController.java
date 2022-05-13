@@ -39,9 +39,7 @@ public class DirectorsRestController {
                 }
             } else {
                 if (country != null) {
-                    return this.directorsDAO.findByNameStartsWithIgnoreCaseAndCountryOrderByIdDesc(
-                            name,
-                            country);
+                    return this.directorsDAO.findByNameStartsWithIgnoreCaseAndCountryOrderByIdDesc(name, country);
                 } else {
                     return this.directorsDAO.findByNameStartsWithIgnoreCaseOrderByIdDesc(name);
                 }
