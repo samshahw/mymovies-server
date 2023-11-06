@@ -3,7 +3,7 @@ package it.ss.mymoviesserver.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "director", schema = "mymovies")
+@Table(name = "directors", schema = "mymovies")
 public class Director {
 
     @Id
